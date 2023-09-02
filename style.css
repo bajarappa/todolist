@@ -63,8 +63,9 @@
 }
 
 /* Plus icon with a pointer cursor */
-#plus-icon {
+.plus-icon {
   cursor: pointer;
+  display: none;
 }
 
 /* Section containing clear tasks buttons */
@@ -120,11 +121,12 @@ hr {
 .btns-update {
   display: flex;
   gap: 8px;
+  color: #ddd;
 }
 
 /* Active button with color aqua */
 .active {
-  color: aqua;
+  color: #151515;
 }
 
 /* Buttons with a pointer cursor */

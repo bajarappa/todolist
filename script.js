@@ -70,9 +70,11 @@ function addTask(taskName) {
 function addTaskFromInputBox() {
   const taskName = inputBox.value.trim();
   if (taskName === "") {
+    plusIcon.classList.add("plus-icon");
     alert("Please add a task");
   } else {
     addTask(taskName);
+    plusIcon.classList.remove("plus-icon");
     inputBox.value = "";
   }
 }
