@@ -1,0 +1,102 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+/* Styling TodoList body */
+.container {
+  background: #ebebeb;
+  max-width: 450px;
+  width: 100%;
+  margin: 200px auto;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.todo-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+/* TodoList heading position changed */
+.heading {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+}
+.input-box {
+  background-color: #eeeeee;
+  width: 100%;
+  border-radius: 6px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+  margin: 20px 0;
+  /* padding: 10px; */
+}
+
+.input-box input {
+  background: transparent;
+  border: none;
+  width: 100%;
+}
+
+.input-box:hover {
+  background-color: lightgray;
+}
+
+.input-box input:focus {
+  outline: none;
+}
+.icon {
+  font-size: 1.5rem;
+  padding: 10px;
+}
+.btns-clear-tasks {
+  display: flex;
+  justify-content: space-between;
+  color: #bdbbbb;
+  margin-bottom: 6px;
+}
+
+/* Styling horizontal line dotted */
+hr {
+  border: none;
+  border-top: 1px dotted #c0bbbb;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+}
+.task-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.del {
+  font-size: 1.2rem;
+  padding: 0;
+}
+.btns-update-tasks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.btns-update {
+  display: flex;
+  gap: 8px;
+}

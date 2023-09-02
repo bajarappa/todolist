@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/2b678ce7e2.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>TODO List</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="todo-container">
+        <div class="heading">To-Do List</div>
+        <div class="input-box">
+          <i class="fa-solid fa-file-lines icon"></i>
+          <input type="text" placeholder="What's in your mind" />
+          <i class="fa-solid fa-plus icon" id="plus-icon"></i>
+        </div>
+        <div class="btns-clear-tasks">
+          <span class="btn btn-clear-all">
+            <i class="fa-solid fa-check-double"></i>
+            Complete all tasks
+          </span>
+          <span class="btn btn-clear-completed"> Clear completed </span>
+        </div>
+        <hr />
+        <ul class="tasks-list">
+          <li class="task">
+            <div class="task-name">
+              <input class="checkinput" name="task" type="checkbox" />
+              <span>Hello world</span>
+            </div>
+            <span>
+              <i class="fa-solid fa-trash del"></i>
+            </span>
+          </li>
+          <li class="task">
+            <div class="task-name">
+              <input class="checkinput" name="task" type="checkbox" />
+              <span>Hello world</span>
+            </div>
+            <span>
+              <i class="fa-solid fa-trash del"></i>
+            </span>
+          </li>
+        </ul>
+        <hr />
+        <div class="btns-update-tasks">
+          <span class="tasks-count">0 tasks left</span>
+          <div class="btns-update">
+            <span class="btn all-tasks active">All</span>
+            <span class="btn pending-tasks">Pending</span>
+            <span class="btn completed-tasks">Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
