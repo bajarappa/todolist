@@ -14,11 +14,14 @@
     <div class="container">
       <div class="todo-container">
         <div class="heading">To-Do List</div>
+
+        <!-- Input box -->
         <div class="input-box">
           <i class="fa-solid fa-file-lines icon"></i>
           <input type="text" placeholder="What's in your mind" />
-          <i class="fa-solid fa-plus icon" id="plus-icon"></i>
+          <i class="fa-solid fa-plus icon plus-icon" id="plus-icon"></i>
         </div>
+        <!-- Clear btn -->
         <div class="btns-clear-tasks">
           <span class="btn btn-clear-all">
             <i class="fa-solid fa-check-double"></i>
@@ -27,27 +30,10 @@
           <span class="btn btn-clear-completed"> Clear completed </span>
         </div>
         <hr />
-        <ul class="tasks-list">
-          <li class="task">
-            <div class="task-name">
-              <input class="checkinput" name="task" type="checkbox" />
-              <span>Hello world</span>
-            </div>
-            <span>
-              <i class="fa-solid fa-trash del"></i>
-            </span>
-          </li>
-          <li class="task">
-            <div class="task-name">
-              <input class="checkinput" name="task" type="checkbox" />
-              <span>Hello world</span>
-            </div>
-            <span>
-              <i class="fa-solid fa-trash del"></i>
-            </span>
-          </li>
-        </ul>
+        <!-- Dynamically Updating Tasks  -->
+        <ul class="tasks-list"></ul>
         <hr />
+        <!-- Btns to toggle state of tasks  -->
         <div class="btns-update-tasks">
           <span class="tasks-count">0 tasks left</span>
           <div class="btns-update">

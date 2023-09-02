@@ -1,4 +1,4 @@
-/* Reset CSS */
+/* Reset CSS to remove default margin, padding, text decoration, and list style */
 * {
   margin: 0;
   padding: 0;
@@ -6,8 +6,9 @@
   list-style: none;
 }
 
-/* Styling TodoList body */
+/* Main container of the TodoList */
 .container {
+  /* Background color and layout */
   background: #ebebeb;
   max-width: 450px;
   width: 100%;
@@ -16,36 +17,38 @@
   border-radius: 10px;
 }
 
+/* Inner container of the TodoList */
 .todo-container {
   background-color: white;
   padding: 20px;
   border-radius: 6px;
 }
 
-/* TodoList heading position changed */
+/* Heading of the TodoList */
 .heading {
   text-align: center;
   font-size: 30px;
   font-weight: 800;
 }
+
+/* Input box for adding tasks */
 .input-box {
+  /* Background color and dimensions */
   background-color: #eeeeee;
   width: 100%;
   border-radius: 6px;
   height: 48px;
   display: flex;
   align-items: center;
-  /* gap: 10px; */
   margin: 20px 0;
-  /* padding: 10px; */
 }
 
+/* Input field within the input box */
 .input-box input {
   background: transparent;
   border: none;
   width: 100%;
 }
-
 .input-box:hover {
   background-color: lightgray;
 }
@@ -53,10 +56,18 @@
 .input-box input:focus {
   outline: none;
 }
+/* Icon styles */
 .icon {
   font-size: 1.5rem;
   padding: 10px;
 }
+
+/* Plus icon with a pointer cursor */
+#plus-icon {
+  cursor: pointer;
+}
+
+/* Section containing clear tasks buttons */
 .btns-clear-tasks {
   display: flex;
   justify-content: space-between;
@@ -64,39 +75,59 @@
   margin-bottom: 6px;
 }
 
-/* Styling horizontal line dotted */
+/* Horizontal line with a dotted pattern */
 hr {
   border: none;
   border-top: 1px dotted #c0bbbb;
 }
 
+/* Task list container */
 .task-list {
   display: flex;
   flex-direction: column;
 }
 
+/* Individual task styles */
 .task {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 48px;
 }
+
+/* Container for the task name and checkbox */
 .task-name {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+/* Delete icon with a pointer cursor */
 .del {
   font-size: 1.2rem;
   padding: 0;
+  cursor: pointer;
 }
+
+/* Section containing task update buttons */
 .btns-update-tasks {
   display: flex;
   justify-content: space-between;
   margin-top: 6px;
 }
+
+/* Individual task update buttons with a pointer cursor */
 .btns-update {
   display: flex;
   gap: 8px;
+}
+
+/* Active button with color aqua */
+.active {
+  color: aqua;
+}
+
+/* Buttons with a pointer cursor */
+.btn {
+  cursor: pointer;
 }

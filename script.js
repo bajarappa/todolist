@@ -6,10 +6,6 @@ const tasksCount = document.querySelector(".tasks-count");
 const btnUpdates = document.querySelectorAll(".btns-update .btn");
 const btnClearCompleted = document.querySelector(".btn-clear-completed");
 const btnClearAll = document.querySelector(".btn-clear-all");
-const btnAllTasks = document.querySelector(".all-tasks");
-
-// Add the "active" class to the "All" button by default
-btnAllTasks.classList.add("active");
 
 // Create an empty array to store task elements
 let taskElements = [];
@@ -19,11 +15,19 @@ function updateTaskCount(count) {
   tasksCount.textContent = count;
 }
 
+// Function to update the task display based on the selected filter
+function updateTaskDisplay(tasks) {
+  tasksList.innerHTML = "";
+  tasks.forEach((item) => {
+    tasksList.appendChild(item);
+  });
+}
+
 // Function to add a new task to the list
 function addTask(taskName) {
   const list = document.createElement("li");
   list.innerHTML = `
-    <li class="task">
+    <div class="task">
       <div class="task-name">
         <input class="checkinput" name="task" type="checkbox" />
         <span>${taskName}</span>
@@ -31,7 +35,7 @@ function addTask(taskName) {
       <span>
         <i class="fa-solid fa-trash del"></i>
       </span>
-    </li>`;
+    </div>`;
 
   const taskCheckbox = list.querySelector(".checkinput");
   const taskText = list.querySelector("span");
@@ -60,6 +64,17 @@ function addTask(taskName) {
     }
     updateTaskCount(taskElements.length);
   });
+}
+
+// Function to add a task from the input box
+function addTaskFromInputBox() {
+  const taskName = inputBox.value.trim();
+  if (taskName === "") {
+    alert("Please add a task");
+  } else {
+    addTask(taskName);
+    inputBox.value = "";
+  }
 }
 
 // Event listener for adding a task when clicking the plus icon
@@ -132,25 +147,6 @@ btnUpdates.forEach((btn) => {
     }
   });
 });
-
-// Function to update the task display based on the selected filter
-function updateTaskDisplay(tasks) {
-  tasksList.innerHTML = "";
-  tasks.forEach((item) => {
-    tasksList.appendChild(item);
-  });
-}
-
-// Function to add a task from the input box
-function addTaskFromInputBox() {
-  const taskName = inputBox.value.trim();
-  if (taskName === "") {
-    alert("Please add a task");
-  } else {
-    addTask(taskName);
-    inputBox.value = "";
-  }
-}
 
 // Initialize the task count when the page loads
 updateTaskCount(taskElements.length);
