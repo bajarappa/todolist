@@ -1,144 +1,156 @@
+// Select DOM elements using querySelector
 const inputBox = document.querySelector(".input-box input");
 const plusIcon = document.querySelector("#plus-icon");
 const tasksList = document.querySelector(".tasks-list");
-const btnPendingTasks = document.querySelector(".pending-tasks");
-const btnAllTasks = document.querySelector(".all-tasks");
 const tasksCount = document.querySelector(".tasks-count");
-const btnCompletedTasks = document.querySelector(".completed-tasks");
+const btnUpdates = document.querySelectorAll(".btns-update .btn");
 const btnClearCompleted = document.querySelector(".btn-clear-completed");
 const btnClearAll = document.querySelector(".btn-clear-all");
+const btnAllTasks = document.querySelector(".all-tasks");
 
-// Initialize an empty string to store the user-entered value
-let taskName = "";
+// Add the "active" class to the "All" button by default
+btnAllTasks.classList.add("active");
 
-inputBox.addEventListener("input", function (e) {
-  taskName = e.target.value.trim();
-  updatePlusIconVisibility(); // Call the function to update plusIcon visibility
-});
+// Create an empty array to store task elements
+let taskElements = [];
 
-plusIcon.addEventListener("click", function () {
-  if (taskName === "") {
-    alert("Please add a task");
-  } else {
-    addTask();
-    inputBox.value = "";
-    taskName = "";
-    updatePlusIconVisibility(); // Call the function to update plusIcon visibility
+// Function to update the task count in the UI
+function updateTaskCount(count) {
+  tasksCount.textContent = count;
+}
+
+// Function to add a new task to the list
+function addTask(taskName) {
+  const list = document.createElement("li");
+  list.innerHTML = `
+    <li class="task">
+      <div class="task-name">
+        <input class="checkinput" name="task" type="checkbox" />
+        <span>${taskName}</span>
+      </div>
+      <span>
+        <i class="fa-solid fa-trash del"></i>
+      </span>
+    </li>`;
+
+  const taskCheckbox = list.querySelector(".checkinput");
+  const taskText = list.querySelector("span");
+
+  // Add an event listener to the task checkbox to handle completion
+  taskCheckbox.addEventListener("change", function () {
+    if (taskCheckbox.checked) {
+      taskText.style.textDecoration = "line-through";
+    } else {
+      taskText.style.textDecoration = "none";
+    }
+  });
+
+  // Add the new task to the task list and update the task count
+  tasksList.appendChild(list);
+  taskElements.push(list);
+  updateTaskCount(taskElements.length);
+
+  // Add an event listener to the delete button for task removal
+  const deleteBtn = list.querySelector(".del");
+  deleteBtn.addEventListener("click", function () {
+    list.remove();
+    const index = taskElements.indexOf(list);
+    if (index !== -1) {
+      taskElements.splice(index, 1);
+    }
+    updateTaskCount(taskElements.length);
+  });
+}
+
+// Event listener for adding a task when clicking the plus icon
+plusIcon.addEventListener("click", addTaskFromInputBox);
+
+// Event listener for adding a task when pressing the Enter key in the input box
+inputBox.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    addTaskFromInputBox();
   }
 });
 
-function updatePlusIconVisibility() {
-  plusIcon.style.display = taskName !== "" ? "inline-block" : "none";
-}
-updatePlusIconVisibility();
-let taskElements = [];
-function addTask() {
-  const list = document.createElement("li");
-  list.innerHTML = `<li class="task">
-                <div class="task-name">
-                     <input class="checkinput" name="task" type="checkbox" />
-              <span>${taskName}</span>
-            </div>
-            <span>
-              <i class="fa-solid fa-trash del"></i>
-            </span>
-          </li>`;
-
-  tasksList.appendChild(list);
-  taskElements.push(list);
-  updateTaskCount();
-  // Add a click event listener for the delete button within this newly created task
-  const deleteBtn = list.querySelector(".del");
-  deleteBtn.addEventListener("click", function () {
-    list.remove(); // Remove the entire task when the delete button is clicked
-    taskElements.splice(taskElements.indexOf(list), 1);
-    updateTaskCount();
-  });
-}
-
-function updateTaskCount() {
-  tasksCount.textContent = taskElements.length;
-}
-
-function completeAllTasks() {
-  btnClearAll.addEventListener("click", function () {
-    taskElements.forEach((task) => task.remove());
-    taskElements = [];
-    updateTaskCount();
-  });
-}
-completeAllTasks();
-
+// Event listener for clearing completed tasks
 btnClearCompleted.addEventListener("click", function () {
   const completedTasks = taskElements.filter((task) => {
     const Checkbox = task.querySelector(".checkinput");
     return Checkbox.checked;
   });
+
   completedTasks.forEach((task) => task.remove());
-  completedTasks.forEach((item) => {
-    const index = taskElements.indexOf(item);
-    if (index !== -1) {
-      taskElements.splice(index, 1);
-    }
+  taskElements = taskElements.filter((task) => {
+    const Checkbox = task.querySelector(".checkinput");
+    return !Checkbox.checked;
   });
-  updateTaskCount();
+
+  updateTaskCount(taskElements.length);
 });
 
+// Event listener for clearing all tasks
 btnClearAll.addEventListener("click", function () {
   tasksList.innerHTML = "";
   taskElements = [];
-  updateTaskCount();
+  updateTaskCount(0);
 });
 
-// Set the default filter to "All Tasks"
-let currentFilter = "all";
+// Event listeners for the task status buttons (All, Pending, Completed)
+btnUpdates.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    // Remove the "active" class from all buttons
+    btnUpdates.forEach((button) => button.classList.remove("active"));
 
-// Add an event listener to handle all filter buttons
-btnCompletedTasks.addEventListener("click", function () {
-  filterTasks("completed");
-});
+    const btnText = btn.textContent.trim();
+    let filteredTasks = [];
 
-btnPendingTasks.addEventListener("click", function () {
-  filterTasks("pending");
-});
+    if (btnText === "All") {
+      filteredTasks = taskElements;
+    } else if (btnText === "Pending") {
+      filteredTasks = taskElements.filter((task) => {
+        const Checkbox = task.querySelector(".checkinput");
+        return !Checkbox.checked;
+      });
+    } else if (btnText === "Completed") {
+      filteredTasks = taskElements.filter((task) => {
+        const Checkbox = task.querySelector(".checkinput");
+        return Checkbox.checked;
+      });
+    }
 
-btnAllTasks.addEventListener("click", function () {
-  filterTasks("all");
-});
+    // Add the "active" class to the clicked button
+    btn.classList.add("active");
 
-// Function to filter and display tasks based on the selected filter
-function filterTasks(filter) {
-  // Set the current filter
-  currentFilter = filter;
+    // Update the task display based on the selected filter
+    updateTaskDisplay(filteredTasks);
 
-  // Filter tasks based on the selected filter
-  const filteredTasks = taskElements.filter((item) => {
-    const checkbox = item.querySelector(".checkinput");
-    if (filter === "completed") {
-      return checkbox.checked;
-    } else if (filter === "pending") {
-      return !checkbox.checked;
+    // Update the task count in the UI
+    if (btnText === "All") {
+      updateTaskCount(taskElements.length);
     } else {
-      return true; // "All Tasks" filter, show all tasks
+      updateTaskCount(filteredTasks.length);
     }
   });
+});
 
-  // Clear the current tasks list
+// Function to update the task display based on the selected filter
+function updateTaskDisplay(tasks) {
   tasksList.innerHTML = "";
-
-  // Append the filtered tasks to the tasks list
-  filteredTasks.forEach((item) => {
+  tasks.forEach((item) => {
     tasksList.appendChild(item);
   });
-
-  // Update the task count based on the filtered tasks
-  updateTaskCount(filteredTasks.length);
 }
 
-// Function to update the task count
-function updateTaskCount(count) {
-  tasksCount.textContent = count;
+// Function to add a task from the input box
+function addTaskFromInputBox() {
+  const taskName = inputBox.value.trim();
+  if (taskName === "") {
+    alert("Please add a task");
+  } else {
+    addTask(taskName);
+    inputBox.value = "";
+  }
 }
 
-// Initialize the task list with all tasks
-filterTasks("all");
+// Initialize the task count when the page loads
+updateTaskCount(taskElements.length);
